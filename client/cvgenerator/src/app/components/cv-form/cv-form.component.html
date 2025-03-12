@@ -1,1 +1,72 @@
-<p>cv-form works!</p>
+<form [formGroup]="cvForm" (ngSubmit)="onSubmit()">
+    <div>
+        <h2>Personal Information</h2>
+        <input formControlName="name" placeholder="Name" required>
+        <div *ngIf="cvForm.get('name')?.touched && cvForm.get('name')?.invalid" class="error">
+            Name is required.
+        </div>
+    </div>
+
+    <div>
+        <input formControlName="email" type="email" placeholder="Email" required>
+        <div *ngIf="cvForm.get('email')?.touched && cvForm.get('email')?.invalid" class="error">
+            <span *ngIf="cvForm.get('email')?.hasError('required')">Email is required</span>
+            <span *ngIf="cvForm.get('email')?.hasError('email')">Invalid Email</span>
+        </div>
+    </div>
+
+    <div>
+        <input formControlName="phone" type="phone" placeholder="Phone" required>
+        <div *ngIf="cvForm.get('phone')?.touched && cvForm.get('phone')?.invalid" class="error">
+            <span *ngIf="cvForm.get('phone')?.hasError('required')">Phone is required</span>
+            <span *ngIf="cvForm.get('phone')?.hasError('phone')">Invalid Phone</span>
+        </div>
+    </div>
+
+    <div>
+        <textarea formControlName="summary" placeholder="Professional Summary" required></textarea>
+        <div *ngIf="cvForm.get('summary')?.touched && cvForm.get('summary')?.invalid" class="error">
+            Summary is required
+        </div>
+    </div>
+
+    <div formArrayName="experience">
+        <h2>Work Experience</h2>
+        <div *ngFor="let exp of experience.controls; let i=index" [formGroupName]="i">
+            <input formControlName="company" placeholder="Company" required>
+            <input formControlName="role" placeholder="Role" required>
+            <input type="date" formControlName="start_date" placeholder="Start Date" required>
+            <input type="date" formControlName="end_date" placeholder="Start Date" required>
+
+            <button type="button" (click)="removeExperience(i)">Remove</button>
+            
+        </div>
+        <button type="button" (click)="addExperience()">Add Experience</button>
+    </div>
+
+    <div formArrayName="education">
+        <h2>Education</h2>
+        <div *ngFor="let exp of education.controls; let i=index" [formGroupName]="i">
+            <input formControlName="institution" placeholder="Institution" required>
+            <input formControlName="degree" placeholder="Degree" required>
+            <input type="number" formControlName="year" placeholder="Year" required>
+            <button type="button" (click)="removeEducation(i)">Remove</button>
+            
+        </div>
+        <button type="button" (click)="addEducation()">Add Experience</button>
+    </div>
+
+    
+    <div formArrayName="skills">
+        <h2>Skills</h2>
+        <div *ngFor="let skill of skills.controls; let i=index">
+            <input [formControlName]="i" placeholder="Skill" required>
+            <button type="button" (click)="removeSkill(i)">Remove</button>
+            
+        </div>
+        <button type="button" (click)="addSkill()">Add Skill</button>
+    </div>
+    <button type="submit">Save CV</button>
+</form>
+
+<app-cv-preview [cvForm]="cvForm"></app-cv-preview>

@@ -1,1 +1,28 @@
-<p>cv-preview works!</p>
+<div class="cv-preview" >
+    <h2>{{ cvForm.value.name }}</h2>
+    <p>Email: {{ cvForm.value.email }}</p>
+    <p>Phone: {{ cvForm.value.phone }}</p>
+    <p><strong>Summary:</strong> {{ cvForm.value.summary }}</p>
+    
+    <h3>Work Experience</h3>
+    <div *ngFor="let exp of cvForm.value.experience">
+        <p><strong>Company:</strong> {{ exp.company }}</p>
+        <p><strong>Role:</strong> {{ exp.role }}</p>
+        <p><strong>Start Date:</strong> {{ exp.start_date }}</p>
+        <p><strong>End Date:</strong> {{ exp.end_date }}</p>
+        <hr>
+    </div>
+    
+    <h3>Education</h3>
+    <div *ngFor="let edu of cvForm.value.education">
+        <p><strong>Institution:</strong> {{ edu.institution }}</p>
+        <p><strong>Degree:</strong> {{ edu.degree }}</p>
+        <p><strong>Year:</strong> {{ edu.year }}</p>
+        <hr>
+    </div>
+    
+    <h3>Skills</h3>
+    <ul>
+        <li *ngFor="let skill of cvForm.value.skills">{{ skill }}</li>
+    </ul>
+</div>
