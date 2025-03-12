@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CV } from '../../interfaces/cv.interface';
+import { CvService } from '../../services/cv.service';
 
 @Component({
   selector: 'app-cv-list',
@@ -12,4 +13,16 @@ export class CvListComponent {
   page=1;
   pageSize=10;
   totalItems=0;
+  constructor(private cvService:CvService){
+
+  }
+
+  loadCvs(){
+    this.cvService.getCvs(this.page, this.pageSize).subscribe({
+      next:(response)=>{
+        this.cvList=response.data;
+        this.totalItems=response.total;
+      }
+    })
+  }
 }
